@@ -101,17 +101,8 @@ export default function MyJobsPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-[1.25rem] font-semibold text-gray-900">My Jobs</h1>
+                    <h1 className="text-[24px] font-medium text-[#434348]">My Jobs</h1>
                 </div>
-                <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    <Link href="/dashboard/post-jobs" className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#4F46E5] text-white rounded-xl font-semibold hover:bg-[#4338CA] transition-colors text-sm shadow-sm">
-                        <PlusCircle size={18} />
-                        Post New Job
-                    </Link>
-                </motion.div>
             </div>
 
             {/* Search and Filter Section */}
@@ -176,7 +167,7 @@ export default function MyJobsPage() {
                     <div className="space-y-1.5">
                         <label className="text-[11px] font-bold text-gray-400 uppercase tracking-widest ml-1">Status</label>
                         <Dropdown
-                            value={filters.status || "All Statuses"}
+                            value={filters.status || "All Status"}
                             onChange={(v) => handleFilterChange("status", v === "All Statuses" ? "" : v)}
                             options={["All Statuses", "Active", "Expired", "Draft"]}
                         />

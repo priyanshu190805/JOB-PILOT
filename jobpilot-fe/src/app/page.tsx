@@ -20,18 +20,16 @@ export default function AuthPage() {
   const leftPanelRef = useRef<HTMLDivElement>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
 
-  // ── Carousel ─────────────────────────────────────────────────────────────
   const carouselImages = ["/image/homepage.png", "/image/office.jpg"];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
-    }, 6000); // 6 seconds for a more relaxed pace
+    }, 6000);
     return () => clearInterval(timer);
   }, [carouselImages.length]);
 
-  // ── GSAP Entrance ──
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
@@ -47,9 +45,8 @@ export default function AuthPage() {
         duration: 0.6,
         stagger: 0.04,
         clearProps: "all"
-      }, "-=0.4"); // Starts almost immediately after logo begins
+      }, "-=0.4");
 
-    // Subtle float animation for logo
     gsap.to(".logo-anim svg", {
       y: -4,
       duration: 2,
@@ -59,23 +56,18 @@ export default function AuthPage() {
     });
   }, { scope: containerRef });
 
-  // ── Tab ──────────────────────────────────────────────────────────────────
   const [tab, setTab] = useState<"login" | "register">("login");
 
-  // Clear error when switching tabs
   useEffect(() => {
     dispatch(clearError());
     setLoginErrors({});
     setRegisterErrors({});
   }, [tab, dispatch]);
 
-  // ── Login state ───────────────────────────────────────────────────────────
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [showLoginPw, setShowLoginPw] = useState(false);
   const [loginErrors, setLoginErrors] = useState<{ email?: string; password?: string }>({});
-
-  // ── Register state ────────────────────────────────────────────────────────
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [regEmail, setRegEmail] = useState("");
@@ -91,7 +83,6 @@ export default function AuthPage() {
     confirmPassword?: string;
   }>({});
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
   const validateLogin = () => {
     const errors: { email?: string; password?: string } = {};
     if (!loginEmail) errors.email = "Username or Email is required";
@@ -168,18 +159,18 @@ export default function AuthPage() {
       <div ref={leftPanelRef} className="w-full md:w-1/2 flex flex-col bg-white px-8 sm:px-12 lg:px-16 py-10 overflow-y-auto">
 
         {/* Logo */}
-        <div className="logo-anim flex items-center gap-2.5 mb-10">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-9 h-9 shrink-0">
-            <circle cx="18" cy="18" r="18" fill="#0066FF" opacity="0.12" />
-            <path d="M18 6C11.373 6 6 11.373 6 18s5.373 12 12 12 12-5.373 12-12S24.627 6 18 6zm0 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9 9 9 0 0 1-9-9 9 9 0 0 1 9-9z" fill="#0066FF" opacity="0.3" />
-            <path d="M23 14l-7 4-7-4" stroke="#0066FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <circle cx="18" cy="18" r="3" fill="#0066FF" />
-            <path d="M11 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="#0066FF" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-          <span className="text-[1.15rem] font-semibold text-gray-700 tracking-tight">JobPilot</span>
+        <div className="flex items-end gap-1 mb-9">
+          <Image
+            src="/image/Vector.png"
+            alt="JobPilot Logo"
+            width={28}
+            height={28}
+            className="shrink-0"
+          />
+          <span className="text-[1.5rem] font-medium text-[#434348] tracking-tight leading-none">JobPilot</span>
         </div>
 
-        <div className="flex-1 flex flex-col justify-center max-w-[480px] w-full">
+        <div className="flex-1 flex flex-col justify-start pt-23 max-w-[480px] w-full">
           <AnimatePresence mode="wait">
             {tab === "login" ? (
               <motion.div
@@ -191,11 +182,11 @@ export default function AuthPage() {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <div className="stagger-anim mb-8">
-                  <h1 className="text-[1.75rem] font-semibold text-gray-700 leading-tight mb-1.5">Log In to JobPilot</h1>
-                  <p className="text-[0.95rem] text-gray-500">
+                  <h1 className="text-[32px] font-medium text-[#434348] leading-tight mb-1.5">Log In to JobPilot</h1>
+                  <p className="text-[0.95rem] text-[#434348]">
                     Don't have an account?{" "}
                     <button type="button" onClick={() => setTab("register")}
-                      className="text-gray-700 font-medium underline underline-offset-2 hover:text-indigo-600 transition-colors">
+                      className=" underline underline-offset-2 hover:text-indigo-600 transition-colors">
                       Sign Up
                     </button>
                   </p>
@@ -215,7 +206,7 @@ export default function AuthPage() {
 
                   {/* Email */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm text-gray-400" htmlFor="login-email">Username or Email Address</label>
+                    <label className="text-sm text-[#7E7E86]" htmlFor="login-email">Username or Email Address</label>
                     <input
                       id="login-email"
                       type="text"
@@ -254,7 +245,7 @@ export default function AuthPage() {
                     whileTap={{ scale: 0.97 }}
                     type="submit"
                     disabled={loading}
-                    className="w-full h-[46px] rounded-full bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-all shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full h-[46px] rounded-full bg-[#5D5FEF] text-white text-sm hover:bg-indigo-700 transition-all shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {loading ? "Logging in…" : "Log In"}
                   </motion.button>
@@ -268,13 +259,14 @@ export default function AuthPage() {
                 animate="animate"
                 exit="exit"
                 transition={{ duration: 0.3, ease: "easeOut" }}
+                className="mt-[-80px]"
               >
                 <div className="mb-6">
-                  <h1 className="text-[1.75rem] font-semibold text-gray-700 leading-tight mb-1.5">Welcome to JobPilot</h1>
-                  <p className="text-[0.95rem] text-gray-500">
+                  <h1 className="text-[32px] font-medium text-[#434348] leading-tight mb-1.5">Welcome to JobPilot</h1>
+                  <p className="text-[0.95rem] text-[#434348]">
                     Already have an account?{" "}
                     <button type="button" onClick={() => setTab("login")}
-                      className="text-gray-700 font-medium underline underline-offset-2 hover:text-indigo-600 transition-colors">
+                      className="underline underline-offset-2 hover:text-indigo-600 transition-colors">
                       Log in
                     </button>
                   </p>
@@ -294,7 +286,7 @@ export default function AuthPage() {
                   {/* Full Name + Username */}
                   <div className="flex gap-4">
                     <div className="flex-1 flex flex-col gap-1.5">
-                      <label className="text-sm text-gray-400" htmlFor="reg-fullName">Full Name</label>
+                      <label className="text-sm text-[#7E7E86]" htmlFor="reg-fullName">Full Name</label>
                       <input
                         id="reg-fullName"
                         type="text"
@@ -307,7 +299,7 @@ export default function AuthPage() {
                       {registerErrors.fullName && <p className="text-xs text-red-500 mt-0.5">{registerErrors.fullName}</p>}
                     </div>
                     <div className="flex-1 flex flex-col gap-1.5">
-                      <label className="text-sm text-gray-400" htmlFor="reg-username">Username</label>
+                      <label className="text-sm text-[#7E7E86]" htmlFor="reg-username">Username</label>
                       <input
                         id="reg-username"
                         type="text"
@@ -323,7 +315,7 @@ export default function AuthPage() {
 
                   {/* Email */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm text-gray-400" htmlFor="reg-email">Email</label>
+                    <label className="text-sm text-[#7E7E86]" htmlFor="reg-email">Email</label>
                     <input
                       id="reg-email"
                       type="text"
@@ -338,7 +330,7 @@ export default function AuthPage() {
 
                   {/* Password */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm text-gray-400" htmlFor="reg-password">Password</label>
+                    <label className="text-sm text-[#7E7E86]" htmlFor="reg-password">Password</label>
                     <div className="relative">
                       <input
                         id="reg-password"
@@ -359,7 +351,7 @@ export default function AuthPage() {
 
                   {/* Confirm Password */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-sm text-gray-400" htmlFor="reg-confirm">Confirm Password</label>
+                    <label className="text-sm text-[#7E7E86]" htmlFor="reg-confirm">Confirm Password</label>
                     <div className="relative">
                       <input
                         id="reg-confirm"
@@ -382,7 +374,7 @@ export default function AuthPage() {
                   </div>
 
                   {/* Terms */}
-                  <p className="text-[0.82rem] text-gray-500 mt-1">
+                  <p className="text-[0.82rem] text-gray-500 my-3">
                     By creating an account, you agree to the Terms of use and Privacy Policy.
                   </p>
 
@@ -391,7 +383,7 @@ export default function AuthPage() {
                     whileTap={{ scale: 0.97 }}
                     type="submit"
                     disabled={loading}
-                    className="w-full h-[46px] rounded-full bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-all shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full h-[46px] rounded-full bg-[#5D5FEF] text-white text-sm hover:bg-indigo-700 transition-all shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {loading ? "Creating account..." : "Sign Up"}
                   </motion.button>

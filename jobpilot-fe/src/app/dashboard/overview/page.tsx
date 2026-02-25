@@ -48,25 +48,25 @@ export default function OverviewPage() {
         <div className="space-y-10">
             {/* Welcome header */}
             <div>
-                <h1 className="text-[1.75rem] font-semibold text-gray-900 leading-tight">
-                    Hello, {user?.name || "Designic"} 👋
+                <h1 className="text-[26px] font-medium text-[#434348] leading-tight">
+                    Hello, {user?.name || "Designic"}
                 </h1>
-                <p className="text-[0.9rem] text-gray-500 mt-1">
+                <p className="text-[15px] text-[#7E7E86] mt-1">
                     Here is your daily activity and job overview.
                 </p>
             </div>
 
             {/* Stats cards */}
-            <div className="grid grid-cols-2 gap-5 max-w-lg">
-                <div className="bg-[#E5E6FB] p-6 rounded-2xl flex items-center justify-between">
+            <div className="grid grid-cols-2 gap-5 max-w-xl">
+                <div className="bg-[#E5E6FB] p-6 py-4 rounded-xl flex items-center justify-between">
                     <div>
-                        <p className="text-[2rem] font-bold text-gray-900">
+                        <p className="text-[26px] font-medium text-[#434348]">
                             {loading ? "..." : openJobsCount}
                         </p>
-                        <p className="text-[0.875rem] text-gray-600 font-medium mt-0.5">Open Jobs</p>
+                        <p className="text-[15px] text-[#434348] mt-0.5">Open Jobs</p>
                     </div>
-                    <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                        <Briefcase size={19} className="text-indigo-500" />
+                    <div className="w-14 h-14 bg-white rounded-lg flex items-center justify-center">
+                        <Briefcase size={24} />
                     </div>
                 </div>
             </div>
@@ -74,8 +74,8 @@ export default function OverviewPage() {
             {/* Recent jobs */}
             <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-[1rem] font-semibold text-gray-800">Recently Posted Jobs</h2>
-                    <Link href="/dashboard/my-jobs" className="text-[12.5px] font-semibold text-gray-500 hover:text-indigo-700 transition-colors">
+                    <h2 className="text-[18px] font-medium text-[#434348]">Recently Posted Jobs</h2>
+                    <Link href="/dashboard/my-jobs" className="text-[14px] font-medium text-[#7E7E86] hover:text-indigo-700 transition-colors">
                         View all
                     </Link>
                 </div>

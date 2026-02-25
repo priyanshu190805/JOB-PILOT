@@ -56,49 +56,51 @@ export default function Sidebar() {
     };
 
     return (
-        <aside ref={sidebarRef} className="fixed left-0 top-[74px] h-[calc(100vh-74px)] w-[260px] bg-white border-r border-gray-100 hidden md:flex flex-col z-50">
-            <div className="flex-1 px-4 py-6 overflow-y-auto">
-                <h3 className="text-[11px] font-medium text-gray-400 uppercase tracking-widest mb-4 px-4">
-                    Employers Dashboard
-                </h3>
-                <nav className="space-y-1">
-                    {sidebarLinks.map((link) => {
-                        const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
-                        const Icon = link.icon;
+        <>
+            <aside ref={sidebarRef} className="fixed left-0 top-[76px] h-[calc(100vh-76px)] w-[260px] bg-white border-r border-[#E5E5E6] hidden md:flex flex-col z-50">
+                <div className="flex-1 px-4 py-6 overflow-y-auto">
+                    <h3 className="text-[13px] font-medium text-[#7E7E86] uppercase mb-4">
+                        Employers Dashboard
+                    </h3>
+                    <nav className="space-y-1">
+                        {sidebarLinks.map((link) => {
+                            const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
+                            const Icon = link.icon;
 
-                        return (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={`sidebar-link flex items-center gap-3 px-4 py-3 transition-all duration-200 group relative border-l-3 ${isActive
-                                    ? "bg-[#E5E6FB] text-[#4F46E5] border-[#4F46E5]"
-                                    : "text-gray-500 hover:text-[#4F46E5] hover:bg-gray-50 border-transparent"
-                                    }`}
-                            >
-                                <motion.div
-                                    className="flex items-center gap-3 w-full"
-                                    whileHover={{ x: 4 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className={`sidebar-link flex items-center gap-3 px-4 py-2.5 transition-all duration-200 group relative border-l-3 ${isActive
+                                        ? "bg-[#E5E6FB] text-[#4F46E5] border-[#4F46E5]"
+                                        : "text-gray-500 hover:text-[#4F46E5] hover:bg-gray-50 border-transparent"
+                                        }`}
                                 >
-                                    <Icon size={18} className={`${isActive ? "text-[#4F46E5]" : "text-gray-400 group-hover:text-[#4F46E5]"}`} />
-                                    <span className="font-medium text-[13px]">{link.name}</span>
-                                </motion.div>
-                            </Link>
-                        );
-                    })}
-                </nav>
-            </div>
+                                    <motion.div
+                                        className="flex items-center gap-3 w-full"
+                                        whileHover={{ x: 4 }}
+                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                    >
+                                        <Icon size={18} className={`${isActive ? "text-[#4F46E5]" : "text-gray-400 group-hover:text-[#4F46E5]"}`} />
+                                        <span className="font-medium text-[14px]">{link.name}</span>
+                                    </motion.div>
+                                </Link>
+                            );
+                        })}
+                    </nav>
+                </div>
 
-            {/* Logout - Deskopt Only */}
-            <div className="p-4 border-t border-gray-50">
-                <button
-                    onClick={() => setIsLogoutModalOpen(true)}
-                    className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-gray-500 hover:text-red-500 hover:bg-red-50 transition-all duration-200 group"
-                >
-                    <LogOut size={18} />
-                    <span className="font-medium text-[13px]">Log Out</span>
-                </button>
-            </div>
+                {/* Logout - Deskopt Only */}
+                <div className="p-4 border-t border-gray-50">
+                    <button
+                        onClick={() => setIsLogoutModalOpen(true)}
+                        className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-[#7E7E86] hover:text-red-500 hover:bg-red-50 transition-all duration-200 group"
+                    >
+                        <LogOut size={20} />
+                        <span className="font-medium text-[14px]">Log Out</span>
+                    </button>
+                </div>
+            </aside>
 
             <ConfirmationModal
                 isOpen={isLogoutModalOpen}
@@ -109,6 +111,6 @@ export default function Sidebar() {
                 confirmText="Log Out"
                 confirmColor="bg-red-600 hover:bg-red-700 shadow-red-200"
             />
-        </aside>
+        </>
     );
 }

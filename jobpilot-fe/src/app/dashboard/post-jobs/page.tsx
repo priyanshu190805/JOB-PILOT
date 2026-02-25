@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import Dropdown from "@/components/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { postJob, clearJobStatus } from "@/store/jobSlice";
+import { postJob } from "@/store/jobSlice";
 import { JobRole, SalaryType, EducationLevel, ExperienceLevel, JobType, JobLevel } from "@/types/enums";
-import { Country, State, City } from "country-state-city";
+import { Country, State } from "country-state-city";
 
 export default function PostJobPage() {
     const router = useRouter();
@@ -41,7 +41,6 @@ export default function PostJobPage() {
     const [allCountries] = useState(Country.getAllCountries());
     const [states, setStates] = useState<any[]>([]);
 
-    // Unique currencies for selection
     const allCurrencies = Array.from(new Set(allCountries.map(c => c.currency))).sort();
 
     useEffect(() => {
@@ -49,7 +48,6 @@ export default function PostJobPage() {
             const countryObj = allCountries.find(c => c.name === formData.country);
             if (countryObj) {
                 setStates(State.getStatesOfCountry(countryObj.isoCode));
-                // Cascading currency: set default currency of the country
                 setFormData(prev => ({ ...prev, currency: countryObj.currency }));
             }
         } else {
@@ -69,7 +67,6 @@ export default function PostJobPage() {
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
-        // Helper to check for 5 characters if it's a string field
         const checkLength = (field: keyof typeof formData, label: string, minLen: number = 5) => {
             const value = formData[field];
             if (typeof value === "string") {
@@ -86,7 +83,6 @@ export default function PostJobPage() {
         checkLength("description", "Description", 50);
         checkLength("requirements", "Requirements", 20);
 
-        // Required checks for selectors/others
         if (!formData.jobRole) newErrors.jobRole = "Job Role is required.";
         if (!formData.minSalary) {
             newErrors.minSalary = "Min Salary is required.";
@@ -119,14 +115,14 @@ export default function PostJobPage() {
     };
 
     const inputCls = (field: string) =>
-        `w-full h-[48px] px-4 rounded-xl border outline-none transition-all text-gray-700 placeholder-gray-400 ${errors[field] ? "border-red-400 focus:border-red-400 focus:ring-1 focus:ring-red-100" : "border-gray-200 focus:border-[#4F46E5]"
+        `w-full h-[46px] px-4 rounded-xl border outline-none transition-all text-gray-700 placeholder-gray-400 ${errors[field] ? "border-red-400 focus:border-red-400 focus:ring-1 focus:ring-red-100" : "border-gray-200 focus:border-[#4F46E5]"
         }`;
 
     return (
         <div className="max-w-[1240px] mx-auto pb-20">
             {/* Header */}
-            <div className="mb-8">
-                <h1 className="text-[1.25rem] font-semibold text-gray-800">Post a Job</h1>
+            <div className="mb-7">
+                <h1 className="text-[24px] font-medium text-[#434348]">Post a Job</h1>
             </div>
 
             {error && (
@@ -135,11 +131,11 @@ export default function PostJobPage() {
                 </div>
             )}
 
-            <div className="bg-white space-y-4">
+            <div className="bg-white space-y-6">
                 {/* Basic Info */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2">
-                        <label className="text-[13px] font-medium text-gray-500">Job Title</label>
+                        <label className="text-[14px] font-medium text-[#7E7E86]">Job Title</label>
                         <input type="text" className={inputCls("jobTitle")} value={formData.jobTitle} onChange={(e) => {
                             setFormData({ ...formData, jobTitle: e.target.value });
                             if (errors.jobTitle) setErrors({ ...errors, jobTitle: "" });
@@ -147,7 +143,7 @@ export default function PostJobPage() {
                         {errors.jobTitle && <p className="text-xs text-red-500 mt-1">{errors.jobTitle}</p>}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[13px] font-medium text-gray-500">Tags</label>
+                        <label className="text-[14px] text-[#7E7E86]">Tags</label>
                         <input type="text" className={inputCls("tags")} value={formData.tags} onChange={(e) => {
                             setFormData({ ...formData, tags: e.target.value });
                             if (errors.tags) setErrors({ ...errors, tags: "" });
@@ -155,7 +151,7 @@ export default function PostJobPage() {
                         {errors.tags && <p className="text-xs text-red-500 mt-1">{errors.tags}</p>}
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[13px] font-medium text-gray-500">Job Role</label>
+                        <label className="text-[14px] text-[#7E7E86]">Job Role</label>
                         <Dropdown value={formData.jobRole} options={Object.values(JobRole)} placeholder="Select" onChange={(v) => {
                             setFormData({ ...formData, jobRole: v });
                             if (errors.jobRole) setErrors({ ...errors, jobRole: "" });
@@ -165,11 +161,11 @@ export default function PostJobPage() {
                 </div>
 
                 {/* Salary */}
-                <div className="space-y-4">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6 first:border-0 first:pt-0">Salary</h2>
+                <div className="space-y-3">
+                    <h2 className="text-[18px] font-medium text-[#434348] border-t border-gray-50 pt-6 first:border-0 first:pt-0">Salary</h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Min Salary</label>
+                            <label className="text-[14px] text-[#7E7E86]">Min Salary</label>
                             <input type="text" className={inputCls("minSalary")} value={formData.minSalary} onChange={(e) => {
                                 const val = e.target.value.replace(/\D/g, "");
                                 setFormData({ ...formData, minSalary: val });
@@ -178,7 +174,7 @@ export default function PostJobPage() {
                             {errors.minSalary && <p className="text-xs text-red-500 mt-1">{errors.minSalary}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Max Salary</label>
+                            <label className="text-[14px] text-[#7E7E86]">Max Salary</label>
                             <input type="text" className={inputCls("maxSalary")} value={formData.maxSalary} onChange={(e) => {
                                 const val = e.target.value.replace(/\D/g, "");
                                 setFormData({ ...formData, maxSalary: val });
@@ -187,7 +183,7 @@ export default function PostJobPage() {
                             {errors.maxSalary && <p className="text-xs text-red-500 mt-1">{errors.maxSalary}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Currency</label>
+                            <label className="text-[14px] text-[#7E7E86]">Currency</label>
                             <Dropdown
                                 value={formData.currency}
                                 options={allCurrencies}
@@ -201,7 +197,7 @@ export default function PostJobPage() {
                             {errors.currency && <p className="text-xs text-red-500 mt-1">{errors.currency}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Salary Type</label>
+                            <label className="text-[14px] text-[#7E7E86]">Salary Type</label>
                             <Dropdown value={formData.salaryType} options={Object.values(SalaryType)} placeholder="Select" onChange={(v) => setFormData({ ...formData, salaryType: v })} />
                         </div>
                     </div>
@@ -209,10 +205,10 @@ export default function PostJobPage() {
 
                 {/* Advance Info */}
                 <div className="space-y-4">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Advance Information</h2>
+                    <h2 className="text-[18px] font-medium text-[#434348] border-t border-gray-50">Advance Information</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Education Level</label>
+                            <label className="text-[14px] text-[#7E7E86]">Education Level</label>
                             <Dropdown value={formData.educationLevel} options={Object.values(EducationLevel)} placeholder="Select" onChange={(v) => {
                                 setFormData({ ...formData, educationLevel: v });
                                 if (errors.educationLevel) setErrors({ ...errors, educationLevel: "" });
@@ -220,7 +216,7 @@ export default function PostJobPage() {
                             {errors.educationLevel && <p className="text-xs text-red-500 mt-1">{errors.educationLevel}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Experience Level</label>
+                            <label className="text-[14px] text-[#7E7E86]">Experience Level</label>
                             <Dropdown value={formData.experienceLevel} options={Object.values(ExperienceLevel)} placeholder="Select" onChange={(v) => {
                                 setFormData({ ...formData, experienceLevel: v });
                                 if (errors.experienceLevel) setErrors({ ...errors, experienceLevel: "" });
@@ -228,7 +224,7 @@ export default function PostJobPage() {
                             {errors.experienceLevel && <p className="text-xs text-red-500 mt-1">{errors.experienceLevel}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Job Type</label>
+                            <label className="text-[14px] text-[#7E7E86]">Job Type</label>
                             <Dropdown value={formData.jobType} options={Object.values(JobType)} placeholder="Select" onChange={(v) => {
                                 setFormData({ ...formData, jobType: v });
                                 if (errors.jobType) setErrors({ ...errors, jobType: "" });
@@ -236,7 +232,7 @@ export default function PostJobPage() {
                             {errors.jobType && <p className="text-xs text-red-500 mt-1">{errors.jobType}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Job Level</label>
+                            <label className="text-[14px] text-[#7E7E86]">Job Level</label>
                             <Dropdown value={formData.jobLevel} options={Object.values(JobLevel)} placeholder="Select" onChange={(v) => {
                                 setFormData({ ...formData, jobLevel: v });
                                 if (errors.jobLevel) setErrors({ ...errors, jobLevel: "" });
@@ -244,7 +240,7 @@ export default function PostJobPage() {
                             {errors.jobLevel && <p className="text-xs text-red-500 mt-1">{errors.jobLevel}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Expiration Date</label>
+                            <label className="text-[14px] text-[#7E7E86]">Expiration Date</label>
                             <div
                                 className={`relative flex items-center w-full h-[48px] rounded-xl border transition-all cursor-pointer ${errors.expirationDate ? "border-red-400 bg-red-50/10" : "border-gray-200 focus-within:border-[#4F46E5] bg-white"
                                     }`}
@@ -284,10 +280,10 @@ export default function PostJobPage() {
 
                 {/* Location */}
                 <div className="space-y-4">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Location</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <h2 className="text-[18px] font-medium text-[#434348] border-t border-gray-50">Location</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Country</label>
+                            <label className="text-[14px] text-[#7E7E86]">Country</label>
                             <Dropdown value={formData.country} options={allCountries.map(c => c.name)} placeholder="Select Country" searchable={true} onChange={(v) => {
                                 setFormData({ ...formData, country: v });
                                 if (errors.country) setErrors({ ...errors, country: "" });
@@ -295,7 +291,7 @@ export default function PostJobPage() {
                             {errors.country && <p className="text-xs text-red-500 mt-1">{errors.country}</p>}
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">State</label>
+                            <label className="text-[14px] text-[#7E7E86]">State</label>
                             <Dropdown value={formData.state} options={states.map(s => s.name)} placeholder="Select State" searchable={true} onChange={(v) => {
                                 setFormData({ ...formData, state: v });
                                 if (errors.state) setErrors({ ...errors, state: "" });
@@ -313,7 +309,7 @@ export default function PostJobPage() {
 
                 {/* Description */}
                 <div className="space-y-6">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Job Description</h2>
+                    <h2 className="text-[18px] font-medium text-[#434348] border-t border-gray-50">Job Description</h2>
                     <textarea className={`w-full min-h-[180px] p-4 rounded-xl border outline-none transition-all text-gray-700 placeholder-gray-400 ${errors.description ? "border-red-400 focus:border-red-400" : "border-gray-100 focus:border-[#4F46E5]"}`} placeholder="Add job description" value={formData.description} onChange={(e) => {
                         setFormData({ ...formData, description: e.target.value });
                         if (errors.description) setErrors({ ...errors, description: "" });
@@ -323,7 +319,7 @@ export default function PostJobPage() {
 
                 {/* Requirements */}
                 <div className="space-y-6">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Job Requirements</h2>
+                    <h2 className="text-[18px] font-medium text-[#434348] border-t border-gray-50">Job Requirements</h2>
                     <textarea className={`w-full min-h-[140px] p-4 rounded-xl border outline-none transition-all text-gray-700 placeholder-gray-400 ${errors.requirements ? "border-red-400 focus:border-red-400" : "border-gray-100 focus:border-[#4F46E5]"}`} placeholder="Enter requirements line by line (each line will be a bullet point)" value={formData.requirements} onChange={(e) => {
                         setFormData({ ...formData, requirements: e.target.value });
                         if (errors.requirements) setErrors({ ...errors, requirements: "" });
@@ -337,7 +333,7 @@ export default function PostJobPage() {
                         whileTap={{ scale: 0.95 }}
                         onClick={handlePostJob}
                         disabled={loading}
-                        className="h-[48px] px-10 rounded-3xl bg-[#5C63ED] text-white text-[15px] font-semibold hover:bg-[#4E55D4] transition-all shadow-sm disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="h-[46px] px-10 rounded-3xl bg-[#5C63ED] text-white text-[16px] font-medium hover:bg-[#4E55D4] transition-all shadow-sm disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {loading ? (
                             <>

@@ -23,7 +23,6 @@ export default function DeleteModal({
     confirmColor = "bg-[#F04438] hover:bg-[#D92D20] shadow-red-200"
 }: DeleteModalProps) {
 
-    // Close on ESC key
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
@@ -41,7 +40,7 @@ export default function DeleteModal({
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-start justify-center p-4 sm:p-6 pt-20 sm:pt-10">
+                <div className="fixed inset-0 z-[9999] flex items-start justify-center p-4 sm:p-6 pt-20 sm:pt-10">
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -57,21 +56,21 @@ export default function DeleteModal({
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="relative w-full max-w-[380px] bg-white rounded-[20px] shadow-2xl p-6 space-y-4"
+                        className="relative w-full max-w-[380px] bg-white rounded-[20px] p-6 space-y-2"
                     >
                         <div className="space-y-1">
-                            <h2 className="text-[18px] font-bold text-gray-800">{title}</h2>
-                            <p className="text-[14px] text-gray-400 font-medium">{message}</p>
+                            <h2 className="text-[18px] font-medium text-[#434348]">{title}</h2>
+                            <p className="text-[12px] text-[#7E7E86] font-medium">{message}</p>
                         </div>
 
-                        <div className="h-[1px] w-full bg-gray-100" />
+                        <div className="h-[2px] w-full bg-gray-100" />
 
                         <div className="flex items-center justify-end gap-3">
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={onClose}
-                                className="h-[44px] px-6 rounded-[22px] border border-gray-100 text-[14px] font-semibold text-gray-600 hover:bg-gray-50 transition-all flex-1 sm:flex-none"
+                                className="h-[44px] px-6 rounded-[22px] border-2 border-gray-100 text-[14px] font-medium text-[#434348] hover:bg-gray-50 transition-all flex-1 sm:flex-none"
                             >
                                 Cancel
                             </motion.button>
@@ -79,7 +78,7 @@ export default function DeleteModal({
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={onConfirm}
-                                className={`h-[44px] px-6 rounded-[22px] text-white text-[14px] font-semibold transition-all flex-1 sm:flex-none shadow-sm ${confirmColor}`}
+                                className={`h-[42px] px-8 rounded-[22px] text-white text-[14px] transition-all flex-1 sm:flex-none shadow-sm ${confirmColor}`}
                             >
                                 {confirmText}
                             </motion.button>

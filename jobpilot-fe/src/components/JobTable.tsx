@@ -42,11 +42,11 @@ export default function JobTable({ jobs, onDelete }: JobTableProps) {
                 <table className="w-full min-w-[680px] text-left border-collapse">
                     {/* ── Header ── */}
                     <thead>
-                        <tr className="bg-gray-100 border-b border-gray-100">
-                            <th className="px-6 py-3 text-[14px] font-medium text-gray-500  tracking-wider rounded-l-lg">Job</th>
-                            <th className="px-6 py-3 text-[14px] font-medium text-gray-500  tracking-wider">Status</th>
-                            <th className="px-6 py-3 text-[14px] font-medium text-gray-500  tracking-wider">Applications</th>
-                            <th className="px-6 py-3 text-[14px] font-medium text-gray-500  tracking-wider text-left rounded-r-lg">Actions</th>
+                        <tr className="bg-[#F2F2F3] border-b border-gray-100">
+                            <th className="px-6 py-3 text-[14px] font-medium text-[#7E7E86] tracking-wider rounded-l-lg w-[40%]">Jobs</th>
+                            <th className="px-6 py-3 text-[14px] font-medium text-[#7E7E86] tracking-wider w-[18%]">Status</th>
+                            <th className="px-6 py-3 text-[14px] font-medium text-[#7E7E86] tracking-wider w-[22%]">Applications</th>
+                            <th className="px-6 py-3 text-[14px] font-medium text-[#7E7E86] tracking-wider text-right pr-30 rounded-r-lg w-[20%]">Actions</th>
                         </tr>
                     </thead>
 
@@ -56,9 +56,9 @@ export default function JobTable({ jobs, onDelete }: JobTableProps) {
                             <tr key={job.id} className="hover:bg-gray-50/60 transition-colors">
 
                                 {/* Job title + meta */}
-                                <td className="px-6 py-5">
-                                    <p className="font-medium text-gray-800 text-[14.5px] leading-tight">{job.title}</p>
-                                    <p className={`text-[12.5px] mt-1 flex items-center gap-1.5 ${job.remaining === "Expired" ? "text-red-500 font-medium" : "text-gray-400"}`}>
+                                <td className="px-4 py-5">
+                                    <p className="font-medium text-gray-800 text-[14px] leading-tight">{job.title}</p>
+                                    <p className={`text-[12px] mt-1 flex items-center gap-2.5 ${job.remaining === "Expired" ? "text-red-500 font-medium" : "text-gray-400"}`}>
                                         {job.type}
                                         <span className="w-[3px] h-[3px] rounded-full bg-gray-300 inline-block" />
                                         {job.remaining}
@@ -68,38 +68,38 @@ export default function JobTable({ jobs, onDelete }: JobTableProps) {
                                 {/* Status badge */}
                                 <td className="px-6 py-5">
                                     {job.status === "Active" ? (
-                                        <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-green-500">
-                                            <CheckCircle2 size={15} className="text-green-500" /> Active
+                                        <span className="inline-flex items-center gap-1.5 text-[14px] font-medium text-green-500">
+                                            <CheckCircle2 size={18} className="text-green-500" /> Active
                                         </span>
                                     ) : job.status === "Draft" ? (
-                                        <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-gray-500">
-                                            <CircleDashed size={15} className="text-gray-400" /> Draft
+                                        <span className="inline-flex items-center gap-1.5 text-[14px] font-medium text-gray-500">
+                                            <CircleDashed size={18} className="text-gray-400" /> Draft
                                         </span>
                                     ) : (
-                                        <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-red-500">
-                                            <AlertCircle size={15} className="text-red-400" /> Expired
+                                        <span className="inline-flex items-center gap-1.5 text-[14px] font-medium text-red-500">
+                                            <AlertCircle size={18} className="text-red-400" /> Expired
                                         </span>
                                     )}
                                 </td>
 
                                 {/* Applications count */}
                                 <td className="px-6 py-5">
-                                    <span className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-gray-500">
-                                        <Users size={15} className="text-gray-400" />
+                                    <span className="inline-flex items-center gap-1.5 text-[14px] font-medium text-[#434348]">
+                                        <Users size={18} className="text-[#434348]" />
                                         {job.applicants} Applications
                                     </span>
                                 </td>
 
                                 {/* Actions */}
                                 <td className="px-6 py-5">
-                                    <div className="flex items-center justify-start gap-2">
+                                    <div className="flex items-center justify-end gap-3">
 
                                         {/* Primary: View Job */}
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => router.push(`/dashboard/my-jobs/${job.id}`)}
-                                            className="h-[38px] px-8 rounded-3xl bg-indigo-100 text-[#4F46E5] text-[12.5px] font-semibold hover:bg-[#E0E1FD] transition-colors"
+                                            className="h-[38px] px-6 rounded-3xl bg-[#E5E6FB] text-[#4F46E5] font-medium text-[14px] hover:bg-[#E0E1FD] transition-colors"
                                         >
                                             View Job
                                         </motion.button>
@@ -110,9 +110,9 @@ export default function JobTable({ jobs, onDelete }: JobTableProps) {
                                                 onClick={() =>
                                                     setOpenMenuId(openMenuId === job.id ? null : job.id)
                                                 }
-                                                className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                                                className="w-8 h-8 flex items-center justify-center rounded-lg text-[#434348] hover:text-gray-600 hover:bg-gray-100 transition-colors"
                                             >
-                                                <MoreVertical size={17} />
+                                                <MoreVertical size={19} />
                                             </button>
 
                                             <AnimatePresence>

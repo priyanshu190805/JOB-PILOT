@@ -92,7 +92,6 @@ export default function EditJobPage() {
             const countryObj = allCountries.find(c => c.name === formData.country);
             if (countryObj) {
                 setStates(State.getStatesOfCountry(countryObj.isoCode));
-                // Only set default currency if we don't have one (initial load preservation)
                 if (!formData.currency) {
                     setFormData(prev => ({ ...prev, currency: countryObj.currency }));
                 }
@@ -119,14 +118,14 @@ export default function EditJobPage() {
     return (
         <div className="w-full px-4 md:px-0 max-w-[1240px] mx-auto pb-20">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-                <h1 className="text-[1.25rem] font-semibold text-gray-800">Edit Job Details</h1>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-7">
+                <h1 className="text-[24px] font-medium text-[#434348]">Edit Job Details</h1>
                 <div className="flex items-center gap-3 sm:gap-4">
                     <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => router.back()}
-                        className="h-[44px] flex-1 sm:flex-none px-6 rounded-xl border border-gray-200 text-gray-600 text-[15px] font-medium hover:bg-gray-50 transition-all text-center"
+                        className="h-[44px] flex-1 sm:flex-none px-6 rounded-3xl border border-gray-200 text-gray-600 text-[15px] font-medium hover:bg-gray-50 transition-all text-center"
                     >
                         Cancel
                     </motion.button>
@@ -135,7 +134,7 @@ export default function EditJobPage() {
                         whileTap={{ scale: 0.98 }}
                         onClick={handleSave}
                         disabled={loading}
-                        className="h-[44px] flex-1 sm:flex-none px-6 sm:px-8 rounded-xl bg-[#4F46E5] text-white text-[15px] font-medium hover:bg-[#4338CA] transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-70"
+                        className="h-[42px] flex-1 sm:flex-none px-6 sm:px-8 rounded-3xl bg-[#5148E5] text-white text-[16px] hover:bg-[#4338CA] transition-all shadow-sm flex items-center justify-center gap-2 disabled:opacity-70"
                     >
                         {loading && <Loader2 size={18} className="animate-spin" />}
                         {loading ? "Saving..." : "Save"}
@@ -153,79 +152,79 @@ export default function EditJobPage() {
                 {/* Basic Info */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2">
-                        <label className="text-[13px] font-medium text-gray-500">Job Title</label>
-                        <input type="text" className="w-full h-[48px] px-4 rounded-xl border border-gray-200 outline-none focus:border-[#4F46E5] transition-all text-gray-700" value={formData.jobTitle} onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })} />
+                        <label className="text-[14px] text-[#7E7E86]">Job Title</label>
+                        <input type="text" className="w-full h-[46px] px-4 rounded-xl border border-gray-200 outline-none focus:border-[#4F46E5] transition-all text-gray-700" value={formData.jobTitle} onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[13px] font-medium text-gray-500">Tags</label>
-                        <input type="text" className="w-full h-[48px] px-4 rounded-xl border border-gray-200 outline-none focus:border-[#4F46E5] transition-all text-gray-700" placeholder="Tags" value={formData.tags} onChange={(e) => setFormData({ ...formData, tags: e.target.value })} />
+                        <label className="text-[14px] text-[#7E7E86]">Tags</label>
+                        <input type="text" className="w-full h-[46px] px-4 rounded-xl border border-gray-200 outline-none focus:border-[#4F46E5] transition-all text-gray-700" placeholder="Tags" value={formData.tags} onChange={(e) => setFormData({ ...formData, tags: e.target.value })} />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-[13px] font-medium text-gray-500">Job Role</label>
+                        <label className="text-[14px] text-[#7E7E86]">Job Role</label>
                         <Dropdown value={formData.jobRole} options={Object.values(JobRole)} onChange={(v) => setFormData({ ...formData, jobRole: v })} />
                     </div>
                 </div>
 
-                <div className="space-y-4">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Salary</h2>
+                <div className="space-y-3">
+                    <h2 className="text-[1.1rem] font-medium text-[#434348] border-t border-gray-50">Salary</h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Min Salary</label>
-                            <div className="flex items-center w-full h-[48px] rounded-xl border border-gray-200 focus-within:border-[#4F46E5] transition-all overflow-hidden">
+                            <label className="text-[14px] text-[#7E7E86]">Min Salary</label>
+                            <div className="flex items-center w-full h-[46px] rounded-xl border border-gray-200 focus-within:border-[#4F46E5] transition-all overflow-hidden">
                                 <input type="text" className="flex-1 h-full px-4 outline-none text-gray-700" value={formData.minSalary} onChange={(e) => setFormData({ ...formData, minSalary: e.target.value })} />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Max Salary</label>
-                            <div className="flex items-center w-full h-[48px] rounded-xl border border-gray-200 focus-within:border-[#4F46E5] transition-all overflow-hidden">
+                            <label className="text-[14px] text-[#7E7E86]">Max Salary</label>
+                            <div className="flex items-center w-full h-[46px] rounded-xl border border-gray-200 focus-within:border-[#4F46E5] transition-all overflow-hidden">
                                 <input type="text" className="flex-1 h-full px-4 outline-none text-gray-700" value={formData.maxSalary} onChange={(e) => setFormData({ ...formData, maxSalary: e.target.value })} />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Currency</label>
+                            <label className="text-[14px] text-[#7E7E86]">Currency</label>
                             <Dropdown value={formData.currency} options={allCurrencies} searchable={true} onChange={(v) => setFormData({ ...formData, currency: v })} />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Salary Type</label>
+                            <label className="text-[14px] text-[#7E7E86]">Salary Type</label>
                             <Dropdown value={formData.salaryType} options={Object.values(SalaryType)} onChange={(v) => setFormData({ ...formData, salaryType: v })} />
                         </div>
                     </div>
                 </div>
 
                 {/* Advance Information */}
-                <div className="space-y-4">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Advance Information</h2>
+                <div className="space-y-3">
+                    <h2 className="text-[1.1rem] font-medium text-[#434348] border-t border-gray-50 pt-6">Advance Information</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Education Level</label>
+                            <label className="text-[14px] text-[#7E7E86]">Education Level</label>
                             <Dropdown value={formData.educationLevel} options={Object.values(EducationLevel)} onChange={(v) => setFormData({ ...formData, educationLevel: v })} />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Experience Level</label>
+                            <label className="text-[14px] text-[#7E7E86]">Experience Level</label>
                             <Dropdown value={formData.experienceLevel} options={Object.values(ExperienceLevel)} onChange={(v) => setFormData({ ...formData, experienceLevel: v })} />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Job Type</label>
+                            <label className="text-[14px] text-[#7E7E86]">Job Type</label>
                             <Dropdown value={formData.jobType} options={Object.values(JobType)} onChange={(v) => setFormData({ ...formData, jobType: v })} />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Job Level</label>
+                            <label className="text-[14px] text-[#7E7E86]">Job Level</label>
                             <Dropdown value={formData.jobLevel} options={Object.values(JobLevel)} onChange={(v) => setFormData({ ...formData, jobLevel: v })} />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Expiration Date</label>
+                            <label className="text-[14px] text-[#7E7E86]">Expiration Date</label>
                             <div className="relative">
-                                <input type="date" className="w-full h-[48px] px-4 rounded-xl border border-gray-100 outline-none focus:border-[#4F46E5] transition-all text-gray-700" value={formData.expirationDate} onChange={(e) => setFormData({ ...formData, expirationDate: e.target.value })} />
+                                <input type="date" className="w-full h-[46px] px-4 rounded-xl border border-gray-100 outline-none focus:border-[#4F46E5] transition-all text-gray-700" value={formData.expirationDate} onChange={(e) => setFormData({ ...formData, expirationDate: e.target.value })} />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="space-y-4">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Location</h2>
+                <div className="space-y-3">
+                    <h2 className="text-[1.1rem] font-medium text-[#434348] border-t border-gray-50">Location</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[13px] font-medium text-gray-500">Country</label>
+                            <label className="text-[14px] text-[#7E7E86]">Country</label>
                             <Dropdown value={formData.country} options={allCountries.map(c => c.name)} searchable={true} onChange={(v) => setFormData({ ...formData, country: v, state: "" })} />
                         </div>
                         <div className="space-y-2">
@@ -247,10 +246,10 @@ export default function EditJobPage() {
                 </div>
 
                 {/* Description */}
-                <div className="space-y-6">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Job Description</h2>
+                <div className="space-y-2">
+                    <h2 className="text-[1.1rem] font-medium text-[#434348] border-t border-gray-50">Job Description</h2>
                     <textarea
-                        className="w-full min-h-[180px] p-4 rounded-xl border border-gray-100 outline-none focus:border-[#4F46E5] transition-all text-gray-700 placeholder-gray-400"
+                        className="w-full min-h-[180px] p-4 text-[14px] rounded-xl border border-gray-100 outline-none focus:border-[#4F46E5] transition-all text-gray-700 placeholder-gray-400"
                         placeholder="Add job description"
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -258,10 +257,10 @@ export default function EditJobPage() {
                 </div>
 
                 {/* Requirements */}
-                <div className="space-y-6 pb-12">
-                    <h2 className="text-[1.1rem] font-semibold text-gray-900 border-t border-gray-50 pt-6">Job Requirements</h2>
+                <div className="space-y-2 pb-12">
+                    <h2 className="text-[1.1rem] font-medium text-[#434348] border-t border-gray-50">Job Requirements</h2>
                     <textarea
-                        className="w-full min-h-[140px] p-4 rounded-xl border border-gray-100 outline-none focus:border-[#4F46E5] transition-all text-gray-700 placeholder-gray-400"
+                        className="w-full min-h-[140px] p-4 text-[14px] rounded-xl border border-gray-100 outline-none focus:border-[#4F46E5] transition-all text-gray-700 placeholder-gray-400"
                         placeholder="Enter requirements line by line (each line will be a bullet point)"
                         value={formData.requirements}
                         onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
